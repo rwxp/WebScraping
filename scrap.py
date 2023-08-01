@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import pandas as pd
+import pandas as pandas
 
 
 url = "https://colombia.as.com/resultados/futbol/colombia_ii/clasificacion/"
@@ -19,5 +19,20 @@ for team in names:
     else:
        break
     count+=1
-    
-print(team_names)
+
+
+#Points 
+points = soup.find_all('td', class_='destacado')
+team_points = list()
+
+count = 0
+for point in points:
+    if count < 20:
+      team_points.append(point.text)
+    else:
+       break
+    count+=1
+
+
+data_frame = pandas.DataFrame({'Name': team_names, 'Points': team_points}, index = list(range(1, 21)) )  
+print(data_frame)
